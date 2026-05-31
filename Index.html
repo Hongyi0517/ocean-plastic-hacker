@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 14 減塑生活黑客任務平台</title>
+    <!-- 引入 Tailwind CSS 確保畫面美觀 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <!-- 導覽列 -->
+    <nav class="bg-gradient-to-r river bg-sky-600 to-teal-500 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wide"><i class="fa-solid fa-fish-fins mr-2"></i>蔚藍行動實踐平台</h1>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm bg-white/20 px-3 py-1 rounded-full">⚡ 行動實踐者入口</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主畫面區塊 -->
+    <main class="max-w-4xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- 左側：遊戲化即時回饋看板 -->
+        <section class="md:col-span-1 space-y-6">
+            <!-- 個人積分 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center">
+                <h3 class="text-slate-500 font-medium text-sm mb-1">我的目前累積</h3>
+                <div id="impact-points" class="text-4xl font-black text-sky-600 mb-1">0</div>
+                <p class="text-xs text-slate-400 mb-4">影響力點數 (Impact Points)</p>
+                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-2 text-left flex justify-between">
+                    <span>Lv.1 初級守護者</span>
+                    <span id="progress-text">再 30 點升級</span>
+                </p>
+            </div>
+
+            <!-- 減碳勳章牆 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-700 mb-4"><i class="fa-solid fa-medal text-amber-500 mr-2"></i>已解鎖勳章</h3>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div id="badge-1" class="opacity-30 transition-opacity duration-500">
+                        <div class="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto text-sky-600 text-lg mb-1 shadow-inner">
+                            <i class="fa-solid fa-cup-straw"></i>
+                        </div>
+                        <span class="text-[10px] block text-slate-500 font-medium">不拿吸管</span>
+                    </div>
+                    <div id="badge-2" class="opacity-30 transition-opacity duration-500">
+                        <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mx-auto text-teal-600 text-lg mb-1 shadow-inner">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <span class="text-[10px] block text-slate-500 font-medium">無痕外食</span>
+                    </div>
+                    <div id="badge-3" class="opacity-30 transition-opacity duration-500">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600 text-lg mb-1 shadow-inner">
+                            <i class="fa-solid fa-bottle-water"></i>
+                        </div>
+                        <span class="text-[10px] block text-slate-500 font-medium">不拿寶特瓶</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右側：行動與任務區 -->
+        <section class="md:col-span-2 space-y-6">
+            <!-- 模組二的核心功能 1：行動懶人包（難易度選擇） -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-indigo-500 mr-2"></i>行動懶人包模組</h3>
+                    <span class="text-xs text-slate-400">依自身環境一鍵變更</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="switchMode('easy')" id="btn-easy" class="py-2 px-3 border-2 border-sky-500 bg-sky-50 text-sky-700 rounded-xl text-xs font-bold transition-all focus:outline-none">
+                        🌱 簡易參與 (校園)
+                    </button>
+                    <button onclick="switchMode('normal')" id="btn-normal" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">
+                        🔥 進階挑戰 (外食)
+                    </button>
+                    <button onclick="switchMode('hard')" id="btn-hard" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">
+                        👑 地獄難度 (全無塑)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 模組二的核心功能 2：每日微型任務清單與拍照上傳 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-700 mb-4"><i class="fa-solid fa-list-check text-teal-500 mr-2"></i>今日微型打卡任務</h3>
+                
+                <div id="task-container" class="space-y-4">
+                    <!-- 任務內容將由 JavaScript 動態渲染 -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 簡易互動 JavaScript 邏輯 -->
+    <script>
+        // 點數與勳章狀態資料庫
+        let points = 0;
+        const maxPoints = 30;
+
+        // 行動懶人包的微型任務清單資料
+        const taskDatabase = {
+            easy: [
+                { id: 1, text: "今日外食自備環保餐具", points: 10, badge: "badge-2", done: false },
+                { id: 2, text: "購買飲料自備循環杯或保溫杯", points: 10, badge: "badge-1", done: false }
+            ],
+            normal: [
+                { id: 3, text: "主動拒絕小吃店主廚提供的塑膠袋", points: 15, badge: "badge-2", done: false },
+                { id: 4, text: "一整天不購買任何瓶裝寶特瓶飲料", points: 15, badge: "badge-3", done: false }
+            ],
+            hard: [
+                { id: 5, text: "達成連續 24 小時零廢棄垃圾生活", points: 30, badge: "badge-3", done: false },
+                { id: 6, text: "自備保鮮盒前往傳統市場無痕買菜", points: 20, badge: "badge-2", done: false }
+            ]
+        };
+
+        let currentMode = 'easy';
+
+        // 渲染任務列表
+        function renderTasks() {
+            const container = document.getElementById('task-container');
+            container.innerHTML = '';
+
+            taskDatabase[currentMode].forEach(task => {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = `p-4 border ${task.done ? 'border-teal-200 bg-teal-50/40' : 'border-slate-100 bg-slate-50/50'} rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all`;
+                
+                taskDiv.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="mt-1 ${task.done ? 'text-teal-500' : 'text-slate-300'} text-lg">
+                            <i class="${task.done ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle'}"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold ${task.done ? 'text-slate-400 line-through' : 'text-slate-700'}">${task.text}</p>
+                            <span class="inline-block mt-1 text-[10px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-md font-bold">+${task.points} Impact Points</span>
+                        </div>
+                    </div>
+                    <div>
+                        ${task.done 
+                            ? `<span class="text-xs font-bold text-teal-600 bg-teal-100 px-3 py-1.5 rounded-lg block text-center"><i class="fa-solid fa-image mr-1"></i>已成功上傳打卡</span>`
+                            : `<label class="cursor-pointer block text-center text-xs font-bold text-white bg-sky-500 hover:bg-sky-600 px-3 py-1.5 rounded-lg shadow-sm transition-all">
+                                    <i class="fa-solid fa-camera mr-1"></i>上傳行動照片
+                                    <input type="file" accept="image/*" class="hidden" onchange="completeTask(${task.id})">
+                               </label>`
+                        }
+                    </div>
+                `;
+                container.appendChild(taskDiv);
+            });
+        }
+
+        // 切換懶人包模式
+        function switchMode(mode) {
+            currentMode = mode;
+            ['easy', 'normal', 'hard'].forEach(m => {
+                const btn = document.getElementById(`btn-${m}`);
+                if (m === mode) {
+                    btn.className = "py-2 px-3 border-2 border-sky-500 bg-sky-50 text-sky-700 rounded-xl text-xs font-bold transition-all focus:outline-none";
+                } else {
+                    btn.className = "py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none";
+                }
+            });
+            renderTasks();
+        }
+
+        // 完成任務與即時回饋
+        function completeTask(id) {
+            const task = taskDatabase[currentMode].find(t => t.id === id);
+            if (task && !task.done) {
+                task.done = true;
+                points += task.points;
+                
+                // 更新畫面數據
+                document.getElementById('impact-points').innerText = points;
+                
+                // 更新進度條
+                const pct = Math.min((points / maxPoints) * 100, 100);
+                document.getElementById('progress-bar').style.width = `${pct}%`;
+                
+                if(points >= maxPoints) {
+                    document.getElementById('progress-text').innerText = "已達成今日最高守護者級別！";
+                } else {
+                    document.getElementById('progress-text').innerText = `再 ${maxPoints - points} 點升級`;
+                }
+
+                // 遊戲化回饋：解鎖勳章
+                if (task.badge) {
+                    document.getElementById(task.badge).classList.remove('opacity-30');
+                    document.getElementById(task.badge).classList.add('scale-105', 'font-bold');
+                }
+
+                // 重新渲染列表
+                renderTasks();
+                
+                // 簡易彈窗動畫回饋
+                alert(`🎉 任務成功！獲得了 ${task.points} 點影響力點數，並成功視覺化累積你的環境貢獻！`);
+            }
+        }
+
+        // 初始啟動
+        renderTasks();
+    </script>
+</body>
+</html>

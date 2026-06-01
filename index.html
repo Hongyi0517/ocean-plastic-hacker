@@ -4,111 +4,346 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>學海無涯-永續教育平台</title>
-    <!-- 引入 Tailwind CSS 確保畫面美觀 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Tailwind CSS 網頁美化框架 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome 圖示庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
+<body class="bg-slate-50 min-h-screen text-slate-800 antialiased font-sans">
 
-    <!-- 導覽列 -->
-    <nav class="bg-gradient-to-r river bg-sky-600 to-teal-500 text-white shadow-md">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold tracking-wide"><i class="fa-solid fa-fish-fins mr-2"></i>學海無涯-永續教育平台</h1>
-            <div class="flex items-center space-x-4">
-                <span class="text-sm bg-white/20 px-3 py-1 rounded-full">⚡帳號登入⚡</span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 主畫面區塊 -->
-    <main class="max-w-4xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- 左側：遊戲化即時回饋看板 -->
-        <section class="md:col-span-1 space-y-6">
-            <!-- 個人積分 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center">
-                <h3 class="text-slate-500 font-medium text-sm mb-1">我的目前累積</h3>
-                <div id="impact-points" class="text-4xl font-black text-sky-600 mb-1">0</div>
-                <p class="text-xs text-slate-400 mb-4">影響力點數 (Impact Points)</p>
-                <div class="w-full bg-slate-100 rounded-full h-2.5">
-                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+    <!-- 頂部導航欄 -->
+    <header class="bg-gradient-to-r from-sky-600 via-sky-500 to-teal-500 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2.5 rounded-xl backdrop-blur-sm">
+                    <i class="fa-solid fa-fish-fins text-2xl animate-pulse"></i>
                 </div>
-                <p class="text-[11px] text-slate-400 mt-2 text-left flex justify-between">
-                    <span>Lv.1 初級守護者</span>
-                    <span id="progress-text">再 30 點升級</span>
+                <div>
+                    <h1 class="text-xl font-black tracking-wider">學海無涯-永續教育平台</h1>
+                    <p class="text-xs text-sky-100 opacity-90">SDG 14 x 遊戲化學習系統</p>
+                </div>
+            </div>
+            
+            <!-- 三大課程模組頁籤切換按鈕 -->
+            <nav class="flex bg-black/10 p-1 rounded-xl backdrop-blur-md w-full sm:w-auto overflow-x-auto">
+                <button id="tab-m1" onclick="switchModuleTab('m1')" class="flex-1 sm:flex-none py-2 px-4 rounded-lg text-xs font-bold transition-all bg-white text-sky-700 shadow-sm focus:outline-none">
+                    <i class="fa-solid fa-chart-pie mr-1"></i>模組一：數據探索
+                </button>
+                <button id="tab-m2" onclick="switchModuleTab('m2')" class="flex-1 sm:flex-none py-2 px-4 rounded-lg text-xs font-bold transition-all text-white hover:bg-white/10 focus:outline-none">
+                    <i class="fa-solid fa-square-check mr-1"></i>模組二：微型打卡
+                </button>
+                <button id="tab-m3" onclick="switchModuleTab('m3')" class="flex-1 sm:flex-none py-2 px-4 rounded-lg text-xs font-bold transition-all text-white hover:bg-white/10 focus:outline-none">
+                    <i class="fa-solid fa-users mr-1"></i>模組三：模擬社群
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主內容區 -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- ==================== 模組一：議題分塊探索 ==================== -->
+        <section id="content-m1" class="space-y-6">
+            <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 flex items-start space-x-3">
+                <i class="fa-solid fa-circle-info text-sky-500 mt-1"></i>
+                <p class="text-xs text-sky-700 leading-relaxed">
+                    <strong>【大數據分塊探索說明】</strong> 平台已為你將 iOcean 複雜的海洋大數據拆解為微型區塊。請依序點擊下方的小單元，找出這三項關鍵環境數據之間的<strong>因果關係</strong>，並勾選你的推論答案！
                 </p>
             </div>
 
-            <!-- 減碳勳章牆 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="font-bold text-slate-700 mb-6 text-center"><i class="fa-solid fa-medal text-amber-500 mr-2"></i>已解鎖勳章</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <div class="grid grid-cols-3 gap-4 justify-items-center items-center text-center">
-                    
-                    <div id="badge-1" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
-                        <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center text-amber-700 text-xl mb-2 shadow-inner border border-amber-200">
-                            <i class="fa-solid fa-medal"></i>
+                <a href="https://youtu.be/dQw4w9WgXcQ?si=ST2S1JqJQLIRaaGn" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-sky-300 hover:shadow-md transition-all group">
+                    <div class="flex items-center justify-between text-sky-600 font-bold mb-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-microscope"></i>
+                            <h4>單元 A：微塑膠密度</h4>
                         </div>
-                        <span class="text-xs text-slate-500 font-bold block text-center">環保徽章</span>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
                     </div>
-                    
-                    <div id="badge-2" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
-                        <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 text-xl mb-2 shadow-inner border border-slate-300">
-                            <i class="fa-solid fa-medal"></i>
-                        </div>
-                        <span class="text-xs text-slate-500 font-bold block text-center">好環保徽章</span>
+                    <div class="bg-slate-50 p-4 rounded-xl text-center mb-3">
+                        <span class="text-3xl font-black text-slate-700">4.8</span> <span class="text-xs text-slate-500">個/立方公尺</span>
+                        <p class="text-[11px] text-red-500 mt-1 font-semibold"><i class="fa-solid fa-arrow-trend-up"></i> 較去年同期大幅上升 23%</p>
                     </div>
-                    
-                    <div id="badge-3" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
-                        <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-xl mb-2 shadow-inner border border-yellow-300">
-                            <i class="fa-solid fa-medal"></i>
-                        </div>
-                        <span class="text-xs text-slate-500 font-bold block text-center">超環保徽章</span>
-                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">全台沿海微塑膠主要成分為塑膠袋與免洗餐具碎片，密度最高處多集中於觀光熱點與河口交界處。</p>
+                    <div class="mt-3 text-right"><span class="text-[10px] text-sky-500 font-bold bg-sky-50 px-2 py-1 rounded-md"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>前往 iOcean 觀看海廢大數據</span></div>
+                </a>
 
+                <a href="https://youtu.be/dQw4w9WgXcQ?si=ST2S1JqJQLIRaaGn" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-teal-300 hover:shadow-md transition-all group">
+                    <div class="flex items-center justify-between text-teal-600 font-bold mb-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <h4>單元 B：主要海廢種類</h4>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl mb-3">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span>1. 塑膠袋/包裝</span><span>占比 42%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2 rounded-full mb-2">
+                            <div class="bg-teal-500 h-2 rounded-full" style="width: 42%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span>2. 免洗餐具/杯</span><span>占比 28%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2 rounded-full">
+                            <div class="bg-sky-400 h-2 rounded-full" style="width: 28%"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">ICC 淨灘數據統計顯示，生活垃圾與一次性塑膠製品高居海洋廢棄物排行榜前兩名。</p>
+                    <div class="mt-3 text-right"><span class="text-[10px] text-teal-500 font-bold bg-teal-50 px-2 py-1 rounded-md"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>前往 iOcean 觀看海廢統計</span></div>
+                </a>
+
+                <a href="https://youtu.be/dQw4w9WgXcQ?si=ST2S1JqJQLIRaaGn" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-300 hover:shadow-md transition-all group">
+                    <div class="flex items-center justify-between text-emerald-600 font-bold mb-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-droplet"></i>
+                            <h4>單元 C：沿海水質監測</h4>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl text-center mb-3">
+                        <span class="text-sm font-bold px-3 py-1 bg-amber-100 text-amber-700 rounded-full">輕度污染 (溶氧量偏低)</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">海廢遮蔽陽光並阻礙溶氧交互，且表面易附著有害毒素與重金屬，使特定水域生態劣化。</p>
+                    <div class="mt-3 text-right"><span class="text-[10px] text-emerald-500 font-bold bg-emerald-50 px-2 py-1 rounded-md"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>前往 iOcean 觀看水質監測</span></div>
+                </a>
+
+            </div>
+
+            <!-- 因果關係探討互動 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-700 mb-4"><i class="fa-solid fa-brain text-purple-500 mr-2"></i>因果關係邏輯大考驗</h3>
+                <p class="text-xs text-slate-600 mb-4">根據上面三個分塊單元的數據，你認為下列哪一個「因果鏈結」最符合科學邏輯？</p>
+                <div class="space-y-3">
+                    <label class="block p-4 border border-slate-100 rounded-xl hover:bg-slate-50 cursor-pointer transition-all">
+                        <input type="radio" name="causal" value="wrong1" onclick="checkCausalAnswer()" class="mr-2 accent-sky-500">
+                        <span class="text-xs text-slate-700">水質嚴重變差 (C) 導致遊客在海灘丟棄更多免洗餐具 (B)</span>
+                    </label>
+                    <label id="correct-answer-box" class="block p-4 border border-slate-100 rounded-xl hover:bg-slate-50 cursor-pointer transition-all">
+                        <input type="radio" name="causal" value="correct" onclick="checkCausalAnswer()" class="mr-2 accent-sky-500">
+                        <span class="text-xs text-slate-700">生活免洗餐具垃圾流入海洋 (B) ➔ 碎裂化為微塑膠 (A) ➔ 附著毒素使沿海水質劣化 (C)</span>
+                    </label>
+                </div>
+                <div id="causal-feedback" class="mt-4 hidden p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl text-xs font-semibold">
+                    <i class="fa-solid fa-circle-check mr-1"></i> 太棒了！你成功找出了環境數據背後隱藏的因果關係，認知思維滿分！
                 </div>
             </div>
         </section>
 
-        <!-- 右側：行動與任務區 -->
-        <section class="md:col-span-2 space-y-6">
-            <!-- 模組二的核心功能 1：行動懶人包（難易度選擇） -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-indigo-500 mr-2"></i>行動懶人包模組</h3>
+
+        <!-- ==================== 模組二：生活微型行動打卡（你原本的網頁） ==================== -->
+        <section id="content-m2" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-3 bg-teal-50 border border-teal-100 rounded-2xl p-4 flex items-start space-x-3 mb-2">
+                    <i class="fa-solid fa-leaf text-teal-500 mt-1"></i>
+                    <p class="text-xs text-teal-700 leading-relaxed">
+                        <strong>【微型行動打卡說明】</strong> 歡迎來到實踐專區！請利用右側的「行動懶人包」，根據你今天的生活情境（校園/外食/地獄）選擇挑戰。完成減塑行動後，點擊<strong>「上傳行動照片」</strong>進行實時打卡，左側將即時為你累積影響力點數，並依據完成數量依序解鎖環保徽章！
+                    </p>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="switchMode('easy')" id="btn-easy" class="py-2 px-3 border-2 border-sky-500 bg-sky-50 text-sky-700 rounded-xl text-xs font-bold transition-all focus:outline-none">
-                        🌱 簡易參與
-                    </button>
-                    <button onclick="switchMode('normal')" id="btn-normal" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">
-                        🔥 進階挑戰
-                    </button>
-                    <button onclick="switchMode('hard')" id="btn-hard" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">
-                        👑 地獄難度
-                    </button>
+            <!-- 左側欄：個人績效與勳章牆 -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- 影響力點數與進度條 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">My Impact Points</p>
+                    <div class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-teal-500 mb-4" id="impact-points">0</div>
+                    
+                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 shadow-inner">
+                        <div id="progress-bar" class="bg-gradient-to-r from-sky-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-2 font-medium" id="progress-text">再 30 點升級</p>
+                </div>
+
+                <!-- 減碳勳章牆 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-slate-700 mb-6 text-center"><i class="fa-solid fa-medal text-amber-500 mr-2"></i>已解鎖勳章</h3>
+                    <div class="grid grid-cols-3 gap-4 justify-items-center items-center text-center">
+                        <!-- 第一個勳章：銅牌 -->
+                        <div id="badge-1" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
+                            <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center text-amber-700 text-xl mb-2 shadow-inner border border-amber-200">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <span class="text-xs text-slate-500 font-bold block text-center">環保徽章</span>
+                        </div>
+                        <!-- 第二個勳章：銀牌 -->
+                        <div id="badge-2" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
+                            <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 text-xl mb-2 shadow-inner border border-slate-300">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <span class="text-xs text-slate-500 font-bold block text-center">好環保徽章</span>
+                        </div>
+                        <!-- 第三個勳章：金牌 -->
+                        <div id="badge-3" class="opacity-30 transition-opacity duration-500 flex flex-col items-center justify-center w-full">
+                            <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-xl mb-2 shadow-inner border border-yellow-300">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <span class="text-xs text-slate-500 font-bold block text-center">超環保徽章</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 模組二的核心功能 2：每日微型任務清單與拍照上傳 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="font-bold text-slate-700 mb-4"><i class="fa-solid fa-list-check text-teal-500 mr-2"></i>今日微型打卡任務</h3>
-                
-                <div id="task-container" class="space-y-4">
-                    <!-- 任務內容將由 JavaScript 動態渲染 -->
+            <!-- 右側欄：行動懶人包任務區 -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 mb-6 gap-4">
+                    <div>
+                        <h2 class="text-lg font-black text-slate-800">行動懶人包：減塑實踐任務</h2>
+                        <p class="text-xs text-slate-400">依當前環境自由選組，拍照上傳無痕紀錄</p>
+                    </div>
+                    <!-- 懶人包分流切換 -->
+                    <div class="flex space-x-2 bg-slate-100 p-1 rounded-xl self-start sm:self-auto">
+                        <button id="btn-easy" onclick="switchMode('easy')" class="py-2 px-3 border-2 border-sky-500 bg-sky-50 text-sky-700 rounded-xl text-xs font-bold transition-all focus:outline-none">校園 (簡易)</button>
+                        <button id="btn-normal" onclick="switchMode('normal')" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">外食 (進階)</button>
+                        <button id="btn-hard" onclick="switchMode('hard')" class="py-2 px-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all focus:outline-none">地獄 (無塑)</button>
+                    </div>
                 </div>
+
+                <!-- 任務動態生成容器 -->
+                <div class="space-y-4" id="task-container"></div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 模組三：數位故事與模擬社群牆 ==================== -->
+        <section id="content-m3" class="hidden space-y-8">
+            <div class="bg-rose-50 border border-rose-100 rounded-2xl p-4 flex items-start space-x-3">
+                <i class="fa-solid fa-square-rss text-rose-500 mt-1"></i>
+                <p class="text-xs text-rose-700 leading-relaxed">
+                    <strong>【數位倡議與社群模擬說明】</strong> 個人行動雖然微小，但透過傳播就能放大影響力！請先點擊左側按鈕前往 <strong>Canva</strong> 製作具備視覺爆點的減塑海報或短影音。完成後，將理念與作品連結發布到右側的「模擬社群牆」上，並請瀏覽同儕作品，給予具備建設性的專業互評評論，一起研究如何優化宣傳文案！
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- 左側：倡議任務與數據分析 -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-700 mb-3"><i class="fa-solid fa-bullhorn text-rose-500 mr-2"></i>數位故事製作任務</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                            請以<strong>「如何擴大減塑影響力」</strong>為核心，點擊下方按鈕前往 Canva 製作一張精美減塑海報或 30 秒短影音。完成後，將作品網址發布至右側的模擬社群牆！
+                        </p>
+                        <a href="https://www.canva.com" target="_blank" class="block text-center bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold py-3 px-4 rounded-xl transition-all shadow-sm">
+                            <i class="fa-solid fa-palette mr-1"></i> 開啟 Canva 進行數位創作
+                        </a>
+                    </div>
+
+                    <!-- 影響力數據分析看板 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-700 mb-4"><i class="fa-solid fa-chart-line text-violet-500 mr-2"></i>影響力數據分析看板</h3>
+                        <div class="space-y-3">
+                            <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center">
+                                <span class="text-xs font-semibold text-slate-600">全班發布作品數</span>
+                                <span class="text-sm font-bold text-slate-800" id="total-posts-count">1</span>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center">
+                                <span class="text-xs font-semibold text-slate-600">累計社群總讚數</span>
+                                <span class="text-sm font-bold text-slate-800" id="total-likes-count">24</span>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl">
+                                <span class="text-xs font-semibold text-slate-600 block mb-2">最有效的傳播誘因分析</span>
+                                <div class="text-[11px] text-slate-500 space-y-1">
+                                    <div class="flex justify-between"><span>視覺爆點 (震驚感)</span><span class="font-bold text-violet-600">55%</span></div>
+                                    <div class="flex justify-between"><span>日常同理心 (溫馨)</span><span class="font-bold text-violet-600">30%</span></div>
+                                    <div class="flex justify-between"><span>純數據條列</span><span class="font-bold text-violet-600">15%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：模擬社群牆與同儕互評 -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- 發布新倡議海報貼文表單 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-700 mb-3 text-sm">發布你的減塑倡議到社群牆</h3>
+                        <div class="space-y-3">
+                            <input id="post-author" type="text" placeholder="輸入你的名字/座號" class="w-full text-xs p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500">
+                            <textarea id="post-content" placeholder="分享你的海報理念或貼上 Canva 作品網址..." rows="2" class="w-full text-xs p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"></textarea>
+                            <button onclick="addNewPost()" class="w-full bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl transition-all">
+                                <i class="fa-solid fa-paper-plane mr-1"></i>上傳發布至平台模擬社群
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 社群動態貼文列表 -->
+                    <div class="space-y-4" id="social-wall-container">
+                        <!-- 範例貼文 1 -->
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                            <div class="flex items-center justify-between border-b border-slate-50 pb-2">
+                                <span class="text-xs font-black text-slate-700"><i class="fa-solid fa-user-astronaut mr-1.5 text-sky-500"></i>小海守護者 (座號 05)</span>
+                                <span class="text-[10px] text-slate-400">剛剛</span>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">我用 Canva 做了一張肚子塞滿塑膠袋的信天翁海報，標題叫做「你的一秒方便，牠的一生受難」。希望能激發大家的視覺震撼！作品連結：canva.com/design/example1</p>
+                            <div class="flex items-center space-x-4 pt-2 text-xs text-slate-500">
+                                <button onclick="likePost(this)" class="text-slate-500 hover:text-rose-500 transition-all font-bold"><i class="fa-regular fa-heart mr-1"></i><span>24</span> 讚</button>
+                                <span class="text-slate-300">|</span>
+                                <span><i class="fa-regular fa-comment mr-1"></i>同儕建設性互評</span>
+                            </div>
+                            <!-- 建設性互評留言區 -->
+                            <div class="bg-slate-50 p-3 rounded-xl space-y-2">
+                                <div class="text-[11px] leading-relaxed"><strong class="text-slate-700">座號 12 評論：</strong>這張海報的視覺衝擊感很強（視覺爆點），真的會讓人反思！如果標題字體顏色再稍微調亮一點，在社群上滑過去時一定會更吸睛。</div>
+                                <div class="flex gap-2">
+                                    <input type="text" placeholder="給予具備建設性的專業評論..." class="flex-1 text-[11px] bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg focus:outline-none">
+                                    <button onclick="addComment(this)" class="bg-sky-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold">送出評論</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
     </main>
 
-    <!-- 簡易互動 JavaScript 邏輯 -->
+    <!-- 核心運作邏輯 JavaScript -->
     <script>
-        // 點數與狀態資料庫
+        // ==================== 全域分頁切換邏輯 ====================
+        function switchModuleTab(targetModule) {
+            ['m1', 'm2', 'm3'].forEach(m => {
+                const tabBtn = document.getElementById(`tab-${m}`);
+                const contentSec = document.getElementById(`content-${m}`);
+                if (m === targetModule) {
+                    tabBtn.className = "flex-1 sm:flex-none py-2 px-4 rounded-lg text-xs font-bold transition-all bg-white text-sky-700 shadow-sm focus:outline-none";
+                    contentSec.classList.remove('hidden');
+                    if (m === 'm2') contentSec.classList.add('grid');
+                } else {
+                    tabBtn.className = "flex-1 sm:flex-none py-2 px-4 rounded-lg text-xs font-bold transition-all text-white hover:bg-white/10 focus:outline-none";
+                    contentSec.classList.add('hidden');
+                    if (m === 'm2') contentSec.classList.remove('grid');
+                }
+            });
+        }
+
+        // ==================== 模組一功能邏輯 ====================
+                function checkCausalAnswer() {
+                    // 抓取目前學生選中的選項
+                    const selectedAnswer = document.querySelector('input[name="causal"]:checked');
+                    const feedbackDiv = document.getElementById('causal-feedback');
+                    const answerBox = document.getElementById('correct-answer-box');
+
+                    // 如果什麼都沒選就按到
+                    if (!selectedAnswer) return;
+
+                    // 顯示回饋區塊
+                    feedbackDiv.classList.remove('hidden');
+
+                    if (selectedAnswer.value === 'correct') {
+                        // 答對時的反應：綠色外框與鼓勵文字
+                        answerBox.className = "block p-4 border border-emerald-300 bg-emerald-50 rounded-xl cursor-pointer transition-all";
+                        feedbackDiv.className = "mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl text-xs font-semibold";
+                        feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> 太棒了！你成功找出了環境數據背後隱藏的因果關係，認知思維滿分！`;
+                    } else {
+                        // 答錯時的反應：還原正確選項的外框，並顯示紅色警告與提示文字
+                        answerBox.className = "block p-4 border border-slate-100 rounded-xl hover:bg-slate-50 cursor-pointer transition-all";
+                        feedbackDiv.className = "mt-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs font-semibold animate-headShake";
+                        feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> 哎呀，這個因果關係似乎不太對喔！請重新思考：是水質變差讓大家想丟垃圾，還是垃圾碎裂影響了水質呢？再試一次吧！`;
+                    }
+                }
+
+        // ==================== 模組二功能邏輯（你原本的邏輯） ====================
         let points = 0;
         const maxPoints = 30;
 
-        // 行動懶人包的微型任務清單資料
         const taskDatabase = {
             easy: [
                 { id: 1, text: "今日外食自備環保餐具", points: 10, done: false },
@@ -126,7 +361,6 @@
 
         let currentMode = 'easy';
 
-        // 渲染任務列表
         function renderTasks() {
             const container = document.getElementById('task-container');
             container.innerHTML = '';
@@ -151,7 +385,7 @@
                             : `<label class="cursor-pointer block text-center text-xs font-bold text-white bg-sky-500 hover:bg-sky-600 px-3 py-1.5 rounded-lg shadow-sm transition-all">
                                     <i class="fa-solid fa-camera mr-1"></i>上傳行動照片
                                     <input type="file" accept="image/*" class="hidden" onchange="completeTask(${task.id})">
-                            </label>`
+                               </label>`
                         }
                     </div>
                 `;
@@ -159,7 +393,6 @@
             });
         }
 
-        // 切換懶人包模式
         function switchMode(mode) {
             currentMode = mode;
             ['easy', 'normal', 'hard'].forEach(m => {
@@ -173,7 +406,6 @@
             renderTasks();
         }
 
-        // 計算所有模式中，目前總共完成的任務數量
         function getTotalCompletedTasksCount() {
             let count = 0;
             Object.keys(taskDatabase).forEach(mode => {
@@ -184,38 +416,29 @@
             return count;
         }
 
-        // 核心邏輯：依據完成任務數量解鎖勳章
         function checkAndUnlockBadges() {
             const completedCount = getTotalCompletedTasksCount();
-
-            // 勳章 1：累計完成 1 個任務解鎖
             if (completedCount >= 1) {
                 document.getElementById('badge-1').classList.remove('opacity-30');
                 document.getElementById('badge-1').classList.add('scale-105', 'font-bold');
             }
-            // 勳章 2：累計完成 2 個任務解鎖
             if (completedCount >= 2) {
                 document.getElementById('badge-2').classList.remove('opacity-30');
                 document.getElementById('badge-2').classList.add('scale-105', 'font-bold');
             }
-            // 勳章 3：累計完成 6 個任務解鎖
-            if (completedCount >= 6) {
+            if (completedCount >= 3) {
                 document.getElementById('badge-3').classList.remove('opacity-30');
                 document.getElementById('badge-3').classList.add('scale-105', 'font-bold');
             }
         }
 
-        // 完成任務與即時回饋
         function completeTask(id) {
             const task = taskDatabase[currentMode].find(t => t.id === id);
             if (task && !task.done) {
                 task.done = true;
                 points += task.points;
                 
-                // 更新畫面點數
                 document.getElementById('impact-points').innerText = points;
-                
-                // 更新進度條
                 const pct = Math.min((points / maxPoints) * 100, 100);
                 document.getElementById('progress-bar').style.width = `${pct}%`;
                 
@@ -225,19 +448,110 @@
                     document.getElementById('progress-text').innerText = `再 ${maxPoints - points} 點升級`;
                 }
 
-                // 執行數量檢查並解鎖對應勳章
                 checkAndUnlockBadges();
-
-                // 重新渲染列表
                 renderTasks();
                 
-                // 彈出成功提示，並顯示目前累計完成幾項任務
                 const totalDone = getTotalCompletedTasksCount();
-                alert(`🎉 任務成功！獲得了 ${task.points} 點。目前累計完成 ${totalDone} 個減塑任務！`);
+                alert(`🎉 任務成功！獲得了 ${task.points} 點。目前共完成 ${totalDone} 個減塑任務！`);
             }
         }
 
-        // 初始啟動
+        // ==================== 模組三功能邏輯 ====================
+        let totalLikes = 24;
+        let totalPosts = 1;
+
+        function likePost(buttonElement) {
+            const span = buttonElement.querySelector('span');
+            const icon = buttonElement.querySelector('i');
+            let currentLikes = parseInt(span.innerText);
+            
+            // 利用 class 判斷目前是不是「已經按過讚」的狀態
+            if (buttonElement.classList.contains('liked')) {
+                // 狀況一：原本已經按讚，現在要「取消按讚」
+                currentLikes--;                 // 該貼文讚數減 1
+                totalLikes--;                   // 看板總讚數減 1
+                
+                buttonElement.classList.remove('liked', 'text-rose-500'); // 移除變紅色的樣式
+                buttonElement.classList.add('text-slate-500');             // 還原成普通灰色
+                icon.className = "fa-regular fa-heart mr-1";              // 愛心變回空心
+            } else {
+                // 狀況二：原本沒按讚，現在要「點讚」
+                currentLikes++;                 // 該貼文讚數加 1
+                totalLikes++;                   // 看板總讚數加 1
+                
+                buttonElement.classList.add('liked', 'text-rose-500');    // 加上標記並讓按鈕變紅色
+                buttonElement.classList.remove('text-slate-500');          // 移除灰色
+                icon.className = "fa-solid fa-heart mr-1";                // 愛心變成實心！
+            }
+            
+            // 即時更新該貼文畫面的讚數
+            span.innerText = currentLikes;
+            // 即時同步左側大數據看板的總讚數
+            document.getElementById('total-likes-count').innerText = totalLikes;
+        }
+
+        function addNewPost() {
+            const author = document.getElementById('post-author').value.trim();
+            const content = document.getElementById('post-content').value.trim();
+
+            if (!author || !content) {
+                alert('請填寫名字與分享內容再上傳喔！');
+                return;
+            }
+
+            const wallContainer = document.getElementById('social-wall-container');
+            const newPostDiv = document.createElement('div');
+            newPostDiv.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3";
+            newPostDiv.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-50 pb-2">
+                    <span class="text-xs font-black text-slate-700"><i class="fa-solid fa-user-astronaut mr-1.5 text-sky-500"></i>${author}</span>
+                    <span class="text-[10px] text-slate-400">剛剛</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">${content}</p>
+                <div class="flex items-center space-x-4 pt-2 text-xs text-slate-500">
+                    <button onclick="likePost(this)" class="hover:text-rose-500 transition-all font-bold"><i class="fa-regular fa-heart mr-1"></i><span>0</span> 讚</button>
+                    <span class="text-slate-300">|</span>
+                    <span><i class="fa-regular fa-comment mr-1"></i>同儕建設性互評</span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl space-y-2">
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="給予具備建設性的專業評論..." class="flex-1 text-[11px] bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg focus:outline-none">
+                        <button onclick="addComment(this)" class="bg-sky-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold">送出評論</button>
+                    </div>
+                </div>
+            `;
+            
+            // 插入到最前面
+            wallContainer.insertBefore(newPostDiv, wallContainer.firstChild);
+
+            // 更新分析數據
+            totalPosts++;
+            document.getElementById('total-posts-count').innerText = totalPosts;
+
+            // 清空輸入框
+            document.getElementById('post-author').value = '';
+            document.getElementById('post-content').value = '';
+        }
+
+        function addComment(buttonElement) {
+            const input = buttonElement.previousElementSibling;
+            const commentText = input.value.trim();
+
+            if (!commentText) return;
+
+            const commentDiv = document.createElement('div');
+            commentDiv.className = "text-[11px] leading-relaxed";
+            commentDiv.innerHTML = `<strong class="text-slate-700">匿名守護者評論：</strong>${commentText}`;
+
+            // 將新評論插入到輸入框外層容器的最上方
+            const commentBox = buttonElement.parentElement.parentElement;
+            commentBox.insertBefore(commentDiv, buttonElement.parentElement);
+
+            // 清空輸入框
+            input.value = '';
+        }
+
+        // 頁面初次運作啟動
         renderTasks();
     </script>
 </body>
